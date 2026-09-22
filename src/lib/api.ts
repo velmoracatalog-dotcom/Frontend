@@ -35,9 +35,13 @@ function mergeSettings(settings: Settings | null | undefined): Settings {
 
 export async function getCatalog(): Promise<Catalog> {
   try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
     const response = await fetch(`${API_URL}/api/catalog`, {
       cache: "no-store",
+      signal: controller.signal,
     });
+    clearTimeout(timer);
     if (!response.ok) throw new Error("Catalog request failed");
     const data = (await response.json()) as Partial<Catalog>;
     return {
