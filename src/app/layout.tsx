@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
 import { Intro } from "@/components/home/Intro";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { Footer } from "@/components/layout/Footer";
@@ -10,17 +9,6 @@ import { CatalogProvider } from "@/context/CatalogContext";
 import { getCatalog } from "@/lib/api";
 import { Providers } from "./providers";
 import "./globals.css";
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export const dynamic = "force-dynamic";
 
@@ -41,10 +29,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const catalog = await getCatalog();
 
   return (
-    <html
-      lang="en"
-      className={`${outfit.variable} ${cormorant.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-ivory text-ink">
         <Providers>
           <CatalogProvider catalog={catalog}>

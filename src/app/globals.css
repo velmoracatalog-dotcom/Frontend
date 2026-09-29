@@ -18,8 +18,8 @@
   --color-bronze-light: var(--bronze-light);
   --color-stone: var(--stone);
   --color-line: var(--line);
-  --font-sans: var(--font-outfit);
-  --font-serif: var(--font-cormorant);
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
 }
 
 html {
@@ -29,7 +29,7 @@ html {
 body {
   background: var(--ivory);
   color: var(--ink);
-  font-family: var(--font-outfit), sans-serif;
+  font-family: "Outfit", sans-serif;
 }
 
 body::before {
