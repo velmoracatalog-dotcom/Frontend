@@ -13,6 +13,7 @@ type AuthContextValue = {
   loginWithGoogle: (credential: string) => Promise<AuthUser>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
+  updateUser: (user: AuthUser) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -72,8 +73,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     dispatch(setItems([]));
   }
 
+  function updateUser(next: AuthUser) {
+    setUser(next);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, refresh }}>
+    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, refresh, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

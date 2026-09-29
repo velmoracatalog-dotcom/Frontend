@@ -18,6 +18,22 @@ export function SearchIcon({ className }: IconProps) {
   );
 }
 
+export function UserIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      className={className}
+      aria-hidden
+    >
+      <circle cx="12" cy="8" r="3.2" />
+      <path d="M5.5 19.2a6.5 6.5 0 0 1 13 0" />
+    </svg>
+  );
+}
+
 export function BagIcon({ className }: IconProps) {
   return (
     <svg

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { Ornament } from "@/components/ui/Ornament";
 import { Reveal } from "@/components/ui/Reveal";
@@ -63,10 +64,10 @@ export function Contact() {
         <div className="mt-16 grid grid-cols-1 gap-6 border-t border-line pt-10 md:grid-cols-3">
           {settings.policies.map((note, index) => (
             <Reveal key={note.id} delay={index * 0.08}>
-              <div id={note.id}>
+              <Link href={`/${note.id}`} className="block transition hover:text-bronze">
                 <h3 className="font-serif text-2xl text-ink">{note.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-stone">{note.copy}</p>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

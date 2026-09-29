@@ -8,16 +8,18 @@ import { Reveal } from "@/components/ui/Reveal";
 import { useCatalog } from "@/context/CatalogContext";
 import { easeOutLuxury, fadeUp, stagger } from "@/lib/motion";
 
-export function FeaturedCategories() {
+export function FeaturedCategories({ showHeader = true }: { showHeader?: boolean }) {
   const { categories } = useCatalog();
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+      {showHeader && (
       <Reveal className="mb-12 text-center">
         <p className="text-[11px] tracking-[0.28em] text-bronze uppercase">The Atelier</p>
         <h2 className="mt-3 font-serif text-4xl text-ink md:text-5xl">Featured Categories</h2>
         <Ornament className="mt-5" />
       </Reveal>
+      )}
       <motion.div
         className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
         variants={stagger}
@@ -32,7 +34,7 @@ export function FeaturedCategories() {
             transition={{ duration: 0.8, ease: easeOutLuxury }}
           >
             <Link
-              href="/shop"
+              href={`/shop?category=${encodeURIComponent(category.name)}`}
               className="group relative block aspect-[4/5] overflow-hidden bg-cream"
             >
               <CatalogImage

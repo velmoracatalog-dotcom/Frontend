@@ -125,16 +125,16 @@ export const fallbackCatalog: Catalog = {
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
-  { href: "/#collections", label: "Collections" },
-  { href: "/#about", label: "About" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/collections", label: "Collections" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerLinks = [
   { href: "/shop", label: "Shop" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
-  { href: "#shipping", label: "Shipping" },
-  { href: "#returns", label: "Returns" },
-  { href: "#privacy", label: "Privacy" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+  { href: "/shipping", label: "Shipping" },
+  { href: "/returns", label: "Returns" },
+  { href: "/privacy", label: "Privacy" },
 ] as const;

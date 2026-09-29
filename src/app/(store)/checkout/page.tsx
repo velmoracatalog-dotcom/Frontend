@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CatalogImage } from "@/components/ui/CatalogImage";
 import { useAuth } from "@/context/AuthContext";
 import { apiFetch } from "@/lib/api";
@@ -22,6 +22,15 @@ export default function CheckoutPage() {
     address: "",
     city: "",
   });
+
+  useEffect(() => {
+    if (!user) return;
+    setForm({
+      phone: user.phone ?? "",
+      address: user.address ?? "",
+      city: user.city ?? "",
+    });
+  }, [user]);
 
   if (!loading && !user) {
     router.replace("/login");

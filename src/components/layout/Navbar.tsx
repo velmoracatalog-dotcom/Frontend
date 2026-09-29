@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/lib/fallback";
 import { useCatalog } from "@/context/CatalogContext";
@@ -10,10 +11,11 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { toggleCart } from "@/store/slices/cartSlice";
 import { toggleMobileMenu, toggleSearch } from "@/store/slices/uiSlice";
 import { useAuth } from "@/context/AuthContext";
-import { BagIcon, MenuIcon, SearchIcon } from "@/components/icons";
+import { BagIcon, MenuIcon, SearchIcon, UserIcon } from "@/components/icons";
 
 export function Navbar() {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
   const { user } = useAuth();
   const { settings } = useCatalog();
   const ticker = settings.tickerItems;
@@ -78,7 +80,9 @@ export function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="nav-link text-[12px] tracking-[0.22em] text-ink uppercase"
+                className={`nav-link text-[12px] tracking-[0.22em] uppercase ${
+                  pathname === link.href ? "text-bronze" : "text-ink"
+                }`}
               >
                 {link.label}
               </Link>
@@ -86,41 +90,10 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                {user.role === "admin" && (
-                  <Link
-                    href="/admin"
-                    className="hidden text-[11px] tracking-[0.18em] text-bronze uppercase md:inline"
-                  >
-                    Dashboard
-                  </Link>
-                )}
-                <Link
-                  href="/orders"
-                  className="hidden text-[11px] tracking-[0.18em] text-ink uppercase hover:text-bronze md:inline"
-                >
-                  Orders
-                </Link>
-                <Link
-                  href="/account"
-                  className="hidden max-w-28 truncate text-[11px] tracking-[0.14em] text-ink uppercase hover:text-bronze md:inline"
-                >
-                  {user.name.split(" ")[0]}
-                </Link>
-              </>
-            ) : (
-              <Link
-                href="/login"
-                className="hidden text-[11px] tracking-[0.18em] text-ink uppercase hover:text-bronze md:inline"
-              >
-                Sign in
-              </Link>
-            )}
             <button
               type="button"
               aria-label="Search"
-              className="text-ink transition hover:text-bronze"
+              className="cursor-pointer text-ink transition hover:text-bronze"
               onClick={() => dispatch(toggleSearch())}
             >
               <SearchIcon className="h-5 w-5" />
@@ -128,7 +101,7 @@ export function Navbar() {
             <button
               type="button"
               aria-label="Open cart"
-              className="relative text-ink transition hover:text-bronze"
+              className="relative cursor-pointer text-ink transition hover:text-bronze"
               onClick={() => dispatch(toggleCart())}
             >
               <BagIcon className="h-5 w-5" />
@@ -143,6 +116,25 @@ export function Navbar() {
                 </motion.span>
               )}
             </button>
+            {user && (
+              <Link
+                href="/account"
+                aria-label="Account"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-line bg-cream text-ink transition hover:border-bronze"
+              >
+                {user.picture ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={user.picture}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <UserIcon className="h-4 w-4" />
+                )}
+              </Link>
+            )}
           </div>
         </div>
       </div>

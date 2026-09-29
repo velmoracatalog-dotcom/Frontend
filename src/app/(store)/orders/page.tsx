@@ -2,20 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { AccountShell } from "@/components/layout/AccountShell";
 import { useAuth } from "@/context/AuthContext";
 import { apiFetch } from "@/lib/api";
 import { formatPKR } from "@/lib/format";
 import type { Order } from "@/lib/types";
 
 export default function OrdersPage() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+  const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
-    if (!loading && !user) router.replace("/login");
-  }, [loading, router, user]);
 
   useEffect(() => {
     if (!user) return;
@@ -23,13 +18,14 @@ export default function OrdersPage() {
   }, [user]);
 
   return (
-    <section className="mx-auto max-w-5xl px-5 py-16 md:px-8 md:py-24">
-      <h1 className="font-serif text-4xl md:text-5xl">Your Orders</h1>
+    <AccountShell>
+      <p className="text-[11px] tracking-[0.28em] text-bronze uppercase">Orders</p>
+      <h1 className="mt-3 font-serif text-4xl md:text-5xl">My Orders</h1>
       <div className="mt-10 space-y-6">
         {orders.length === 0 && (
-          <p className="text-sm text-stone">
+          <p className="text-sm leading-7 text-stone">
             No orders yet.{" "}
-            <Link href="/shop" className="text-bronze">
+            <Link href="/shop" className="cursor-pointer text-bronze hover:text-ink">
               Browse the shop
             </Link>
           </p>
@@ -53,6 +49,6 @@ export default function OrdersPage() {
           </article>
         ))}
       </div>
-    </section>
+    </AccountShell>
   );
 }

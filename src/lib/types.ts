@@ -3,6 +3,11 @@ export type AuthUser = {
   email: string;
   name: string;
   picture?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
   role: "user" | "admin";
 };
 
@@ -46,6 +51,17 @@ export type Category = {
   slug: string;
   name: string;
   image: string;
+};
+
+export type ContactMessage = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+  read?: boolean;
+  createdAt?: string;
 };
 
 export type Review = {

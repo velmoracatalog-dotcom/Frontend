@@ -10,6 +10,8 @@ type Stats = {
   products: number;
   orders: number;
   reviews: number;
+  messages: number;
+  unreadMessages: number;
   revenue: number;
   recentOrders: Order[];
 };
@@ -27,12 +29,13 @@ export default function AdminHomePage() {
     { label: "Products", value: stats?.products ?? 0 },
     { label: "Users", value: stats?.users ?? 0 },
     { label: "Reviews", value: stats?.reviews ?? 0 },
+    { label: "Messages", value: stats?.unreadMessages ?? stats?.messages ?? 0 },
   ];
 
   return (
     <div>
       <h1 className="font-serif text-4xl">Overview</h1>
-      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-5">
+      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
         {cards.map((card) => (
           <div key={card.label} className="border border-line px-5 py-6">
             <p className="text-[11px] tracking-[0.18em] uppercase text-stone">{card.label}</p>
