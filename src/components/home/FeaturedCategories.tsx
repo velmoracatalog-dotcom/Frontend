@@ -32,7 +32,7 @@ export function FeaturedCategories() {
             transition={{ duration: 0.8, ease: easeOutLuxury }}
           >
             <Link
-              href="#shop"
+              href="/shop"
               className="group relative block aspect-[4/5] overflow-hidden bg-cream"
             >
               <CatalogImage

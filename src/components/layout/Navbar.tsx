@@ -9,10 +9,12 @@ import { useCatalog } from "@/context/CatalogContext";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { toggleCart } from "@/store/slices/cartSlice";
 import { toggleMobileMenu, toggleSearch } from "@/store/slices/uiSlice";
+import { useAuth } from "@/context/AuthContext";
 import { BagIcon, MenuIcon, SearchIcon } from "@/components/icons";
 
 export function Navbar() {
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const { settings } = useCatalog();
   const ticker = settings.tickerItems;
   const cartCount = useAppSelector((state) =>
@@ -84,6 +86,37 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-4">
+            {user ? (
+              <>
+                {user.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    className="hidden text-[11px] tracking-[0.18em] text-bronze uppercase md:inline"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <Link
+                  href="/orders"
+                  className="hidden text-[11px] tracking-[0.18em] text-ink uppercase hover:text-bronze md:inline"
+                >
+                  Orders
+                </Link>
+                <Link
+                  href="/account"
+                  className="hidden max-w-28 truncate text-[11px] tracking-[0.14em] text-ink uppercase hover:text-bronze md:inline"
+                >
+                  {user.name.split(" ")[0]}
+                </Link>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden text-[11px] tracking-[0.18em] text-ink uppercase hover:text-bronze md:inline"
+              >
+                Sign in
+              </Link>
+            )}
             <button
               type="button"
               aria-label="Search"

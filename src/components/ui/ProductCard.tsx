@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { addToCart } from "@/store/slices/cartSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { formatPKR } from "@/lib/format";
@@ -40,7 +41,11 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="flex flex-1 flex-col">
         <p className="text-[10px] tracking-[0.2em] text-bronze uppercase">{product.category}</p>
-        <h3 className="mt-1 font-serif text-xl tracking-wide text-ink">{product.name}</h3>
+        <h3 className="mt-1 font-serif text-xl tracking-wide text-ink">
+          <Link href={`/product/${product.slug || product.id}`} className="hover:text-bronze">
+            {product.name}
+          </Link>
+        </h3>
         <p className="mt-1 text-sm text-stone">{formatPKR(product.price)}</p>
         <div className="mt-2">
           <StarRating rating={product.rating} />

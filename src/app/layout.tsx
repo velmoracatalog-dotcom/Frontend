@@ -1,12 +1,4 @@
 import type { Metadata } from "next";
-import { Intro } from "@/components/home/Intro";
-import { CartDrawer } from "@/components/layout/CartDrawer";
-import { Footer } from "@/components/layout/Footer";
-import { MobileMenu } from "@/components/layout/MobileMenu";
-import { Navbar } from "@/components/layout/Navbar";
-import { SearchOverlay } from "@/components/layout/SearchOverlay";
-import { CatalogProvider } from "@/context/CatalogContext";
-import { getCatalog } from "@/lib/api";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -18,16 +10,14 @@ export const metadata: Metadata = {
     template: "%s · Velmora",
   },
   description:
-    "Curated products. Timeless choices. Shop fashion, accessories, and lifestyle at Velmora. Email Velmoracatalog@gmail.com · 0370 6058231.",
+    "Curated products. Timeless choices. Shop fashion, accessories, and lifestyle at Velmora.",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",
   },
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const catalog = await getCatalog();
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
       <head>
@@ -39,17 +29,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="flex min-h-full flex-col bg-ivory text-ink">
-        <Providers>
-          <CatalogProvider catalog={catalog}>
-            <Intro />
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <CartDrawer />
-            <SearchOverlay />
-            <MobileMenu />
-          </CatalogProvider>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

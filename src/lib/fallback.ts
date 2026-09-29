@@ -4,6 +4,7 @@ export const fallbackCatalog: Catalog = {
   products: [
     {
       id: "linen-shirt",
+      slug: "linen-shirt",
       name: "Linen Oversized Shirt",
       price: 2499,
       rating: 5,
@@ -12,6 +13,7 @@ export const fallbackCatalog: Catalog = {
     },
     {
       id: "leather-tote",
+      slug: "leather-tote",
       name: "Structured Leather Tote",
       price: 6490,
       rating: 5,
@@ -20,6 +22,7 @@ export const fallbackCatalog: Catalog = {
     },
     {
       id: "ceramic-lamp",
+      slug: "ceramic-lamp",
       name: "Matte Ceramic Lamp",
       price: 4290,
       rating: 4,
@@ -28,6 +31,7 @@ export const fallbackCatalog: Catalog = {
     },
     {
       id: "bronze-hoops",
+      slug: "bronze-hoops",
       name: "Bronze Hoop Earrings",
       price: 1890,
       rating: 5,
@@ -120,14 +124,14 @@ export const fallbackCatalog: Catalog = {
 
 export const navLinks = [
   { href: "/", label: "Home" },
-  { href: "#shop", label: "Shop" },
-  { href: "#collections", label: "Collections" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/shop", label: "Shop" },
+  { href: "/#collections", label: "Collections" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ] as const;
 
 export const footerLinks = [
-  { href: "#shop", label: "Shop" },
+  { href: "/shop", label: "Shop" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
   { href: "#shipping", label: "Shipping" },

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 import { useCatalog } from "@/context/CatalogContext";
 import { navLinks } from "@/lib/fallback";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -12,6 +13,7 @@ import { easeOutLuxury } from "@/lib/motion";
 export function MobileMenu() {
   const dispatch = useAppDispatch();
   const { settings } = useCatalog();
+  const { user, logout } = useAuth();
   const isOpen = useAppSelector((state) => state.ui.isMobileMenuOpen);
 
   return (
@@ -50,6 +52,32 @@ export function MobileMenu() {
                 </Link>
               </motion.div>
             ))}
+            {user ? (
+              <>
+                <Link href="/orders" onClick={() => dispatch(closeMobileMenu())} className="font-serif text-4xl tracking-wide">
+                  Orders
+                </Link>
+                {user.role === "admin" && (
+                  <Link href="/admin" onClick={() => dispatch(closeMobileMenu())} className="font-serif text-4xl tracking-wide">
+                    Dashboard
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    void logout();
+                    dispatch(closeMobileMenu());
+                  }}
+                  className="text-left font-serif text-3xl tracking-wide text-stone"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <Link href="/login" onClick={() => dispatch(closeMobileMenu())} className="font-serif text-4xl tracking-wide">
+                Sign in
+              </Link>
+            )}
           </nav>
           <div className="absolute inset-x-6 bottom-8 text-sm text-stone">
             <a href={`mailto:${settings.email}`} className="block hover:text-ink">

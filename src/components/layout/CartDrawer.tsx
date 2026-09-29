@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { CatalogImage } from "@/components/ui/CatalogImage";
 import { formatPKR } from "@/lib/format";
 import { easeOutLuxury } from "@/lib/motion";
@@ -122,13 +123,15 @@ export function CartDrawer() {
                 <span className="tracking-[0.16em] text-stone uppercase">Subtotal</span>
                 <span className="font-medium">{formatPKR(total)}</span>
               </div>
-              <button
-                type="button"
-                disabled={items.length === 0}
-                className="btn-fill w-full bg-ink py-3 text-[11px] tracking-[0.22em] text-ivory uppercase disabled:cursor-not-allowed disabled:opacity-40"
+              <Link
+                href="/checkout"
+                onClick={() => dispatch(closeCart())}
+                className={`btn-fill block w-full bg-ink py-3 text-center text-[11px] tracking-[0.22em] text-ivory uppercase ${
+                  items.length === 0 ? "pointer-events-none opacity-40" : ""
+                }`}
               >
                 <span>Checkout</span>
-              </button>
+              </Link>
             </div>
           </motion.aside>
         </>

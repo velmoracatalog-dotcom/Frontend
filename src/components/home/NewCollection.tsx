@@ -41,7 +41,7 @@ export function NewCollection() {
           </h2>
           <p className="mt-4 text-lg text-stone">{collection.subtitle}</p>
           <Link
-            href="#shop"
+            href="/shop"
             className="mt-8 inline-flex items-center gap-2 text-[12px] tracking-[0.22em] text-ink uppercase transition hover:gap-3 hover:text-bronze"
           >
             Explore Collection

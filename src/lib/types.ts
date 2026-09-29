@@ -1,11 +1,44 @@
+export type AuthUser = {
+  id: string;
+  email: string;
+  name: string;
+  picture?: string;
+  role: "user" | "admin";
+};
+
 export type Product = {
   id: string;
+  slug: string;
   name: string;
   price: number;
   rating: number;
   image: string;
   category: string;
   description?: string;
+  inStock?: boolean;
+  isBestSeller?: boolean;
+};
+
+export type Order = {
+  id: string;
+  items: Array<{
+    productId: string;
+    slug?: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+  }>;
+  total: number;
+  status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled";
+  customer: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    city?: string;
+  };
+  createdAt?: string;
 };
 
 export type Category = {
@@ -20,6 +53,9 @@ export type Review = {
   quote: string;
   author: string;
   rating: number;
+  productId?: string;
+  productName?: string;
+  visible?: boolean;
 };
 
 export type WhyPoint = {

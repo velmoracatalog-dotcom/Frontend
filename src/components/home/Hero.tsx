@@ -56,7 +56,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.6, ease: easeOutLuxury }}
           >
             <Link
-              href="#shop"
+              href="/shop"
               className="btn-fill mt-8 inline-flex items-center bg-ink px-8 py-3.5 text-[11px] tracking-[0.28em] text-ivory uppercase"
             >
               <span>{hero.cta}</span>
