@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useCatalog } from "@/context/CatalogContext";
 import { apiFetch } from "@/lib/api";
 import { formatPKR } from "@/lib/format";
+import { sellingPrice } from "@/lib/merchandising";
 import type { Review } from "@/lib/types";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
@@ -67,7 +68,16 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           <div className="mt-4">
             <StarRating rating={product.rating} />
           </div>
-          <p className="mt-4 text-xl text-stone">{formatPKR(product.price)}</p>
+          <p className="mt-4 text-xl text-stone">
+            {product.isOnSale && product.salePrice ? (
+              <>
+                <span className="text-bronze">{formatPKR(product.salePrice)}</span>
+                <span className="ml-3 text-base text-stone line-through">{formatPKR(product.price)}</span>
+              </>
+            ) : (
+              formatPKR(product.price)
+            )}
+          </p>
           <p className="mt-6 max-w-md text-sm leading-7 text-stone">
             {product.description || "A considered piece for everyday elegance."}
           </p>
@@ -78,7 +88,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 addToCart({
                   id: product.id,
                   name: product.name,
-                  price: product.price,
+                  price: sellingPrice(product),
                   image: product.image,
                 }),
               )

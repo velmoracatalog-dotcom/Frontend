@@ -1,7 +1,6 @@
-import { BestSellers } from "@/components/home/BestSellers";
 import { Contact } from "@/components/home/Contact";
-import { FeaturedCategories } from "@/components/home/FeaturedCategories";
 import { Hero } from "@/components/home/Hero";
+import { HomeMerch } from "@/components/home/HomeMerch";
 import { Instagram } from "@/components/home/Instagram";
 import { Marquee } from "@/components/home/Marquee";
 import { NewCollection } from "@/components/home/NewCollection";
@@ -13,8 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
-      <FeaturedCategories />
-      <BestSellers />
+      <HomeMerch />
       <NewCollection />
       <WhyVelmora />
       <Reviews />

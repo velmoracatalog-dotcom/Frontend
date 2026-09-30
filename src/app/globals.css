@@ -101,6 +101,15 @@ body::before {
   }
 }
 
+.swiper-button-disabled {
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
+
+.swiper-slide {
+  height: auto;
+}
+
 .marquee-track {
   animation: marquee 32s linear infinite;
 }

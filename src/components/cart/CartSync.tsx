@@ -1,23 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { apiFetch } from "@/lib/api";
-import { useAppSelector } from "@/store/hooks";
+import { readCart, writeCart } from "@/lib/cartStorage";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setItems } from "@/store/slices/cartSlice";
 
 export function CartSync() {
   const { user } = useAuth();
+  const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart.items);
-  const ready = useRef(false);
+  const [ready, setReady] = useState(false);
+  const serverReady = useRef(false);
+
+  useEffect(() => {
+    dispatch(setItems(readCart()));
+    setReady(true);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!ready) return;
+    writeCart(items);
+  }, [items, ready]);
 
   useEffect(() => {
     if (!user) {
-      ready.current = false;
+      serverReady.current = false;
       return;
     }
+    if (!ready) return;
     const timer = window.setTimeout(() => {
-      if (!ready.current) {
-        ready.current = true;
+      if (!serverReady.current) {
+        serverReady.current = true;
         return;
       }
       void apiFetch("/api/cart", {
@@ -26,7 +41,7 @@ export function CartSync() {
       }).catch(() => undefined);
     }, 400);
     return () => window.clearTimeout(timer);
-  }, [items, user]);
+  }, [items, ready, user]);
 
   return null;
 }

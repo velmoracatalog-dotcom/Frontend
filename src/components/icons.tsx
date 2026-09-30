@@ -18,6 +18,40 @@ export function SearchIcon({ className }: IconProps) {
   );
 }
 
+export function EyeIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      className={className}
+      aria-hidden
+    >
+      <path d="M2.8 12S6.4 6.5 12 6.5 21.2 12 21.2 12 17.6 17.5 12 17.5 2.8 12 2.8 12Z" />
+      <circle cx="12" cy="12" r="2.6" />
+    </svg>
+  );
+}
+
+export function EyeOffIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      className={className}
+      aria-hidden
+    >
+      <path d="M4 5.2 19.8 21" />
+      <path d="M9.2 8.4A6.4 6.4 0 0 1 12 6.5c5.6 0 9.2 5.5 9.2 5.5a16 16 0 0 1-3.5 3.9" />
+      <path d="M6.6 7.7A16 16 0 0 0 2.8 12S6.4 17.5 12 17.5c1.2 0 2.3-.2 3.3-.6" />
+      <path d="M10.4 13.4a2.6 2.6 0 0 1 3.2-3.2" />
+    </svg>
+  );
+}
+
 export function UserIcon({ className }: IconProps) {
   return (
     <svg
@@ -139,6 +173,21 @@ export function ReturnIcon({ className }: IconProps) {
     >
       <path d="M8 7H4v4" />
       <path d="M4 11a8 8 0 1 0 2.3-5.7" />
+    </svg>
+  );
+}
+
+export function ArrowLeftIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      aria-hidden
+    >
+      <path d="M19 12H5M11 6l-6 6 6 6" />
     </svg>
   );
 }

@@ -9,12 +9,41 @@ const empty = {
   name: "",
   slug: "",
   price: "",
+  salePrice: "",
   category: "",
+  gender: "",
   description: "",
   image: "",
   inStock: true,
-  isBestSeller: true,
+  isNewArrival: false,
+  isBestSeller: false,
+  isFeatured: false,
+  isOnSale: false,
+  isTrending: false,
+  isLimited: false,
+  isOffer: false,
 };
+
+function fromProduct(product: Product) {
+  return {
+    name: product.name,
+    slug: product.slug,
+    price: String(product.price),
+    salePrice: product.salePrice ? String(product.salePrice) : "",
+    category: product.category,
+    gender: product.gender ?? "",
+    description: product.description ?? "",
+    image: product.image,
+    inStock: product.inStock ?? true,
+    isNewArrival: product.isNewArrival ?? false,
+    isBestSeller: product.isBestSeller ?? false,
+    isFeatured: product.isFeatured ?? false,
+    isOnSale: product.isOnSale ?? false,
+    isTrending: product.isTrending ?? false,
+    isLimited: product.isLimited ?? false,
+    isOffer: product.isOffer ?? false,
+  };
+}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -42,6 +71,7 @@ export default function AdminProductsPage() {
     const payload = {
       ...form,
       price: Number(form.price),
+      salePrice: form.salePrice ? Number(form.salePrice) : 0,
       slug: form.slug || form.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
     };
     try {
@@ -71,6 +101,16 @@ export default function AdminProductsPage() {
     setForm((current) => ({ ...current, image: result.url }));
   }
 
+  const flags = [
+    ["isNewArrival", "New arrival"],
+    ["isBestSeller", "Best seller"],
+    ["isFeatured", "Featured"],
+    ["isOnSale", "On sale"],
+    ["isTrending", "Editor's pick"],
+    ["isLimited", "Limited edition"],
+    ["isOffer", "Special offer"],
+  ] as const;
+
   return (
     <div>
       <h1 className="font-serif text-4xl">Products</h1>
@@ -78,17 +118,35 @@ export default function AdminProductsPage() {
         <input className="border border-line px-3 py-2 text-sm" placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
         <input className="border border-line px-3 py-2 text-sm" placeholder="Slug" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
         <input className="border border-line px-3 py-2 text-sm" placeholder="Price" type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} required />
+        <input className="border border-line px-3 py-2 text-sm" placeholder="Sale price" type="number" value={form.salePrice} onChange={(e) => setForm({ ...form, salePrice: e.target.value })} />
         <select className="border border-line px-3 py-2 text-sm" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} required>
-          <option value="">Category</option>
+          <option value="">Category / type</option>
           {categories.map((category) => (
             <option key={category.id} value={category.name}>{category.name}</option>
           ))}
+        </select>
+        <select className="border border-line px-3 py-2 text-sm" value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}>
+          <option value="">Gender collection</option>
+          <option value="women">Women</option>
+          <option value="men">Men</option>
+          <option value="kids">Kids</option>
         </select>
         <input className="border border-line px-3 py-2 text-sm md:col-span-2" placeholder="Image URL" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} required />
         <input className="text-sm md:col-span-2" type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && void upload(e.target.files[0])} />
         <textarea className="border border-line px-3 py-2 text-sm md:col-span-2" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
         <label className="text-sm"><input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} /> In stock</label>
-        <label className="text-sm"><input type="checkbox" checked={form.isBestSeller} onChange={(e) => setForm({ ...form, isBestSeller: e.target.checked })} /> Best seller</label>
+        <div className="grid grid-cols-2 gap-2 text-sm md:col-span-2">
+          {flags.map(([key, label]) => (
+            <label key={key} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={form[key]}
+                onChange={(e) => setForm({ ...form, [key]: e.target.checked })}
+              />
+              {label}
+            </label>
+          ))}
+        </div>
         {error && <p className="text-sm text-bronze md:col-span-2">{error}</p>}
         <button className="btn-fill bg-ink py-3 text-[11px] tracking-[0.2em] text-ivory uppercase md:col-span-2">
           <span>{editing ? "Update product" : "Add product"}</span>
@@ -102,7 +160,7 @@ export default function AdminProductsPage() {
               <p className="text-sm text-stone">{product.category} · {formatPKR(product.price)}</p>
             </div>
             <div className="flex gap-4 text-[11px] uppercase tracking-[0.16em]">
-              <button type="button" onClick={() => { setEditing(product.id); setForm({ name: product.name, slug: product.slug, price: String(product.price), category: product.category, description: product.description ?? "", image: product.image, inStock: product.inStock ?? true, isBestSeller: product.isBestSeller ?? true }); }}>Edit</button>
+              <button type="button" onClick={() => { setEditing(product.id); setForm(fromProduct(product)); }}>Edit</button>
               <button type="button" className="text-bronze" onClick={() => void apiFetch(`/api/products/${product.id}`, { method: "DELETE" }).then(load)}>Delete</button>
             </div>
           </div>

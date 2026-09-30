@@ -9,6 +9,7 @@ export type AuthUser = {
   postalCode?: string;
   country?: string;
   role: "user" | "admin";
+  createdAt?: string;
 };
 
 export type Product = {
@@ -20,8 +21,17 @@ export type Product = {
   image: string;
   category: string;
   description?: string;
+  gender?: "" | "women" | "men" | "kids";
+  salePrice?: number;
   inStock?: boolean;
+  isNewArrival?: boolean;
   isBestSeller?: boolean;
+  isFeatured?: boolean;
+  isOnSale?: boolean;
+  isTrending?: boolean;
+  isLimited?: boolean;
+  isOffer?: boolean;
+  createdAt?: string;
 };
 
 export type Order = {
@@ -35,7 +45,7 @@ export type Order = {
     quantity: number;
   }>;
   total: number;
-  status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled";
+  status: "pending" | "confirmed" | "packed" | "shipped" | "delivered" | "cancelled";
   customer: {
     name?: string;
     email?: string;
@@ -51,6 +61,16 @@ export type Category = {
   slug: string;
   name: string;
   image: string;
+};
+
+export type AdminNotification = {
+  id: string;
+  type: "order" | "message" | "review" | "user";
+  title: string;
+  body: string;
+  link: string;
+  read?: boolean;
+  createdAt?: string;
 };
 
 export type ContactMessage = {

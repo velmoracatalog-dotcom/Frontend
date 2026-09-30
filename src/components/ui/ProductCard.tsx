@@ -4,6 +4,7 @@ import Link from "next/link";
 import { addToCart } from "@/store/slices/cartSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { formatPKR } from "@/lib/format";
+import { sellingPrice } from "@/lib/merchandising";
 import type { Product } from "@/lib/types";
 import { CatalogImage } from "./CatalogImage";
 import { StarRating } from "./StarRating";
@@ -16,7 +17,7 @@ export function ProductCard({ product }: { product: Product }) {
       addToCart({
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: sellingPrice(product),
         image: product.image,
       }),
     );
@@ -46,7 +47,16 @@ export function ProductCard({ product }: { product: Product }) {
             {product.name}
           </Link>
         </h3>
-        <p className="mt-1 text-sm text-stone">{formatPKR(product.price)}</p>
+        <p className="mt-1 text-sm text-stone">
+          {product.isOnSale && product.salePrice ? (
+            <>
+              <span className="text-bronze">{formatPKR(product.salePrice)}</span>
+              <span className="ml-2 text-stone line-through">{formatPKR(product.price)}</span>
+            </>
+          ) : (
+            formatPKR(product.price)
+          )}
+        </p>
         <div className="mt-2">
           <StarRating rating={product.rating} />
         </div>

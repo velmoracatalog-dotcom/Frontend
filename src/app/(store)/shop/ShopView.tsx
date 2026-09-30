@@ -5,11 +5,23 @@ import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Ornament } from "@/components/ui/Ornament";
 import { useCatalog } from "@/context/CatalogContext";
+import {
+  pickBestSellers,
+  pickFeatured,
+  pickGender,
+  pickLimited,
+  pickNewArrivals,
+  pickOffers,
+  pickOnSale,
+  pickTrending,
+} from "@/lib/merchandising";
 
 export function ShopView() {
   const { products, categories } = useCatalog();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
+  const genderParam = searchParams.get("gender");
+  const sectionParam = searchParams.get("section");
   const [active, setActive] = useState("all");
 
   useEffect(() => {
@@ -17,11 +29,25 @@ export function ShopView() {
   }, [categoryParam]);
 
   const filtered = useMemo(() => {
-    if (active === "all") return products;
-    return products.filter(
-      (product) => product.category.toLowerCase() === active.toLowerCase(),
-    );
-  }, [active, products]);
+    let list = products;
+
+    if (sectionParam === "new") list = pickNewArrivals(products);
+    if (sectionParam === "bestsellers") list = pickBestSellers(products);
+    if (sectionParam === "featured") list = pickFeatured(products);
+    if (sectionParam === "sale") list = pickOnSale(products);
+    if (sectionParam === "trending") list = pickTrending(products);
+    if (sectionParam === "limited") list = pickLimited(products);
+    if (sectionParam === "offers") list = pickOffers(products);
+    if (genderParam) list = pickGender(list, genderParam);
+
+    if (active !== "all") {
+      list = list.filter(
+        (product) => product.category.toLowerCase() === active.toLowerCase(),
+      );
+    }
+
+    return list;
+  }, [active, genderParam, products, sectionParam]);
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">

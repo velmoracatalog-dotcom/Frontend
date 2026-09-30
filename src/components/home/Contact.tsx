@@ -62,7 +62,9 @@ export function Contact() {
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-6 border-t border-line pt-10 md:grid-cols-3">
-          {settings.policies.map((note, index) => (
+          {settings.policies
+            .filter((note) => note.id === "privacy" || note.id === "terms")
+            .map((note, index) => (
             <Reveal key={note.id} delay={index * 0.08}>
               <Link href={`/${note.id}`} className="block transition hover:text-bronze">
                 <h3 className="font-serif text-2xl text-ink">{note.title}</h3>

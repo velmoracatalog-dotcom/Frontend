@@ -15,7 +15,7 @@ export function PageHeader({
       <h1 className="mt-3 font-serif text-4xl md:text-6xl">{title}</h1>
       <Ornament className="mt-5" />
       {copy && (
-        <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-stone">{copy}</p>
+        <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-stone">{copy}</p>
       )}
     </div>
   );

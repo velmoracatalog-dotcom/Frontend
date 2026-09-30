@@ -4,9 +4,8 @@ import { InstagramIcon } from "@/components/icons";
 import { CatalogImage } from "@/components/ui/CatalogImage";
 import { Ornament } from "@/components/ui/Ornament";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionSlider } from "@/components/ui/SectionSlider";
 import { useCatalog } from "@/context/CatalogContext";
-import { motion } from "framer-motion";
-import { easeOutLuxury, fadeUp, stagger } from "@/lib/motion";
 
 export function Instagram() {
   const { settings } = useCatalog();
@@ -14,7 +13,7 @@ export function Instagram() {
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
-      <Reveal className="mb-12 text-center">
+      <Reveal className="mb-8 text-center">
         <div className="mb-3 flex justify-center text-bronze">
           <InstagramIcon className="h-6 w-6" />
         </div>
@@ -26,18 +25,10 @@ export function Instagram() {
         </p>
         <Ornament className="mt-5" />
       </Reveal>
-      <motion.div
-        className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
-        variants={stagger}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
+      <SectionSlider perView={4} breakpoints={{ sm: 2, md: 3, lg: 4 }}>
         {instagram.posts.map((src, index) => (
-          <motion.div
+          <div
             key={`${src}-${index}`}
-            variants={fadeUp}
-            transition={{ duration: 0.8, ease: easeOutLuxury }}
             className="group relative aspect-square overflow-hidden bg-cream"
           >
             <CatalogImage
@@ -50,9 +41,9 @@ export function Instagram() {
             <div className="absolute inset-0 flex items-center justify-center bg-ink/0 text-ivory opacity-0 transition duration-500 group-hover:bg-ink/35 group-hover:opacity-100">
               <InstagramIcon className="h-6 w-6" />
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </SectionSlider>
     </section>
   );
 }
